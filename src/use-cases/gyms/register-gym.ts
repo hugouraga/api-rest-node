@@ -3,7 +3,7 @@ import { Gym } from '@prisma/client'
 
 interface GymRegisterUseCaseRequest {
   title: string
-  description?: string
+  description?: string | null
   longitude: string
   latitude: string
 }

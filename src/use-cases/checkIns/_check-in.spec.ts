@@ -5,6 +5,8 @@ import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-
 import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 import { CheckInRegisterUseCase } from './check-in'
 import { describe, expect, it, beforeEach, vi, afterEach } from 'vitest'
+import { MaxDistanceError } from '../errors/max-distance-error'
+import { MaxNumberCheckInsError } from '../errors/max-number-check-ins-error'
 
 describe('Register Check In Use Case', () => {
   let userRepository: InMemoryUsersRepository
@@ -76,7 +78,7 @@ describe('Register Check In Use Case', () => {
         user_latitude: '-8.1416418',
         user_longitude: '-34.9080550',
       })
-    }).rejects.toBeInstanceOf(Error)
+    }).rejects.toBeInstanceOf(MaxNumberCheckInsError)
   })
 
   it('should be possible to check in on two different dates', async () => {
@@ -111,7 +113,7 @@ describe('Register Check In Use Case', () => {
         user_latitude: '-8.1416418',
         user_longitude: '-34.9280550',
       })
-    }).rejects.toBeInstanceOf(Error)
+    }).rejects.toBeInstanceOf(MaxDistanceError)
   })
 
   it('Should not be possible to check-in to an invalid gym', async () => {
@@ -119,8 +121,8 @@ describe('Register Check In Use Case', () => {
       await checkInRegisterUseCase.execute({
         gym_id: 'gym not found',
         user_id: user.id,
-        user_latitude: '9990',
-        user_longitude: '9990',
+        user_latitude: '-8.1416418',
+        user_longitude: '-34.9280550',
       })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
@@ -130,8 +132,8 @@ describe('Register Check In Use Case', () => {
       await checkInRegisterUseCase.execute({
         gym_id: gym.id,
         user_id: 'user not found',
-        user_latitude: '9990',
-        user_longitude: '9990',
+        user_latitude: '-8.1416418',
+        user_longitude: '-34.9280550',
       })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })

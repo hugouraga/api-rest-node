@@ -7,7 +7,7 @@ export class InMemoryGymRepository implements GymContractRepository {
 
   async register(data: Prisma.GymUncheckedCreateInput) {
     const gym = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       title: data.title,
       description: data.description || null,
       latitude: data.latitude,
