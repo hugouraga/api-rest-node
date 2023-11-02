@@ -1,0 +1,37 @@
+{
+  "name": "api-rest-node",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx --watch src/server.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage-watch": "vitest --coverage"
+  },
+  "keywords": [],
+  "author": "Hugo Issao Uraga",
+  "license": "ISC",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "2.1.0",
+    "@types/node": "20.8.9",
+    "@vitest/coverage-v8": "0.34.6",
+    "eslint": "8.52.0",
+    "prisma": "5.5.2",
+    "tsx": "3.14.0",
+    "typescript": "5.2.2",
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.6",
+    "zod": "3.22.4"
+  },
+  "dependencies": {
+    "@prisma/client": "5.5.2",
+    "@types/bcrypt": "5.0.1",
+    "bcrypt": "5.1.1",
+    "dayjs": "1.11.10",
+    "dotenv": "16.3.1",
+    "fastify": "4.24.3"
+  }
+}
