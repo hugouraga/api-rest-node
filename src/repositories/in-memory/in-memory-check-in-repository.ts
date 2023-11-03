@@ -2,6 +2,7 @@ import { CheckIn, Prisma } from '@prisma/client'
 import {
   CheckInContractRepository,
   FindCheckInsByUserIdOnDate,
+  FindManyByUserId,
 } from '../contracts/contract-check-ins-repository'
 import { randomUUID } from 'node:crypto'
 import dayjs from 'dayjs'
@@ -23,28 +24,34 @@ export class InMemoryCheckInRepository implements CheckInContractRepository {
     return checkIn
   }
 
-  async findCheckInById(id: string) {
+  async findById(id: string) {
     const checkIn = this.checkIns.find((checkIn) => checkIn.id === id)
     return checkIn || null
   }
 
-  async findCheckInsByUserId(id: string) {
-    const checkIns = this.checkIns.filter((checkIn) => checkIn.user_id === id)
+  async findManyByUserId({ id, page }: FindManyByUserId) {
+    const checkIns = this.checkIns
+      .filter((checkIn) => checkIn.user_id === id)
+      .slice((page - 1) * 20, page * 20)
     return checkIns || null
   }
 
-  async findCheckInByUserIdOnDate({ id, date }: FindCheckInsByUserIdOnDate) {
+  async findByUserIdOnDate({ id, date }: FindCheckInsByUserIdOnDate) {
     const startOfTheDay = dayjs(date).hour(-3)
     const endOfTheDay = dayjs(date).hour(20).minute(59).second(59)
-
     const checkIns = this.checkIns.find((checkIn) => {
       const checkInDate = dayjs(checkIn.created_at)
-
       const isOnSameDate =
         checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay)
-
       return (checkIn.user_id === id && isOnSameDate) ?? null
     })
     return checkIns || null
+  }
+
+  async countByUserId(id: string): Promise<number> {
+    const checkInsCount = this.checkIns.filter(
+      (checkIn) => checkIn.user_id === id,
+    ).length
+    return checkInsCount || 0
   }
 }

@@ -2,21 +2,21 @@ import { InMemoryCheckInRepository } from '../../repositories/in-memory/in-memor
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository'
 import { InMemoryGymRepository } from '../../repositories/in-memory/in-memory-gym-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { FetchUserCheckInsUseCase } from './fetch-user-check-ins'
+import { FetchUserCheckInsHistoryUseCase } from './fetch-user-check-ins-history'
 import { User } from '@prisma/client'
 
 describe('Get User Check-ins Use Case', () => {
   let userRepository: InMemoryUsersRepository
   let gymRepository: InMemoryGymRepository
   let checkInRepository: InMemoryCheckInRepository
-  let fetchUserCheckInsUseCase: FetchUserCheckInsUseCase
+  let fetchUserCheckInsUseCase: FetchUserCheckInsHistoryUseCase
   let user: User
 
   beforeEach(async () => {
     userRepository = new InMemoryUsersRepository()
     gymRepository = new InMemoryGymRepository()
     checkInRepository = new InMemoryCheckInRepository()
-    fetchUserCheckInsUseCase = new FetchUserCheckInsUseCase(
+    fetchUserCheckInsUseCase = new FetchUserCheckInsHistoryUseCase(
       userRepository,
       checkInRepository,
     )
@@ -26,11 +26,10 @@ describe('Get User Check-ins Use Case', () => {
       name: 'Hugo Issao Uraga',
       password: '123456',
     })
-  })
 
-  it('should be possible to return user check-ins', async () => {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 1; i <= 22; i++) {
       const gym = await gymRepository.register({
+        id: `gym ${i}`,
         title: `gym javascript ${i}`,
         latitude: '9999',
         longitude: '9999',
@@ -43,11 +42,21 @@ describe('Get User Check-ins Use Case', () => {
         check_in_at: new Date(),
       })
     }
+  })
 
+  it('should be possible to return user check-ins', async () => {
     const { checkIns } = await fetchUserCheckInsUseCase.execute({
-      user_id: user.id,
+      userId: user.id,
+      page: 1,
     })
+    expect(checkIns).toHaveLength(20)
+  })
 
-    expect(checkIns).toHaveLength(5)
+  it('should be possible to search for check-ins by pagination', async () => {
+    const { checkIns } = await fetchUserCheckInsUseCase.execute({
+      userId: user.id,
+      page: 2,
+    })
+    expect(checkIns).toHaveLength(2)
   })
 })
