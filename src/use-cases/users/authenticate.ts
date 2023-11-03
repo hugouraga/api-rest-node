@@ -1,5 +1,5 @@
 import { UsersContractRepository } from '@/repositories/contracts/contract-users-repository'
-import { InvalidCredentialsError } from './../errors/invalid-credentials-error'
+import { InvalidCredentialsError } from '../_errors/invalid-credentials-error'
 import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
 

@@ -1,6 +1,6 @@
 import { UsersContractRepository } from '@/repositories/contracts/contract-users-repository'
 import { User } from '@prisma/client'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found-error'
 
 interface GetUserProfileRequest {
   id: string

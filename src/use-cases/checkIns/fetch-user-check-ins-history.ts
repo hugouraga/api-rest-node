@@ -1,7 +1,7 @@
 import { CheckInContractRepository } from '@/repositories/contracts/contract-check-ins-repository'
 import { UsersContractRepository } from '@/repositories/contracts/contract-users-repository'
 import { CheckIn } from '@prisma/client'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found-error'
 
 interface FetchCheckInsHistoryUseCaseRequest {
   userId: string

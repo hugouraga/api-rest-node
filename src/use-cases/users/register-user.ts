@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { UsersContractRepository } from '@/repositories/contracts/contract-users-repository'
 import { User } from '@prisma/client'
-import { UserAlreadyExistError } from './../errors/user-already-exist-error'
+import { UserAlreadyExistError } from './../_errors/user-already-exist-error'
 
 interface RegisterUseCaseRequest {
   name: string

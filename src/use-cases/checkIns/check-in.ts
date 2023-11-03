@@ -1,11 +1,11 @@
 import { UsersContractRepository } from '@/repositories/contracts/contract-users-repository'
 import { GymContractRepository } from '@/repositories/contracts/contract-gyms-repository'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 import { CheckInContractRepository } from '@/repositories/contracts/contract-check-ins-repository'
 import { CheckIn } from '@prisma/client'
 import { getDistanceBetweenCoordinates } from '@/utils/getDistanceBetweenCoordinates'
-import { MaxDistanceError } from '../errors/max-distance-error'
-import { MaxNumberCheckInsError } from '../errors/max-number-check-ins-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found-error'
+import { MaxDistanceError } from '../_errors/max-distance-error'
+import { MaxNumberCheckInsError } from '../_errors/max-number-check-ins-error'
 
 interface CheckInUseCaseRequest {
   user_id: string

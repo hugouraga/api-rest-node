@@ -2,11 +2,11 @@ import { Gym, User } from '@prisma/client'
 import { InMemoryCheckInRepository } from '../../repositories/in-memory/in-memory-check-in-repository'
 import { InMemoryGymRepository } from '../../repositories/in-memory/in-memory-gym-repository'
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 import { CheckInRegisterUseCase } from './check-in'
 import { describe, expect, it, beforeEach, vi, afterEach } from 'vitest'
-import { MaxDistanceError } from '../errors/max-distance-error'
-import { MaxNumberCheckInsError } from '../errors/max-number-check-ins-error'
+import { ResourceNotFoundError } from '../_errors/resource-not-found-error'
+import { MaxDistanceError } from '../_errors/max-distance-error'
+import { MaxNumberCheckInsError } from '../_errors/max-number-check-ins-error'
 
 describe('Register Check In Use Case', () => {
   let userRepository: InMemoryUsersRepository
